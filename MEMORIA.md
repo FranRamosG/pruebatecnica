@@ -7,7 +7,7 @@
 - [Herramientas utilizadas](#herramientas-utilizadas)
 - [Proceso](#proceso)
 - [Implementación](#implementación)
-- [Resultado](#resultado)
+- [Conclusiones](#conclusiones)
 
 ---
 
@@ -64,8 +64,71 @@ Debido a las limitaciones temporales, no pude continuar explorando la opción de
 
 ## Implementación
 
-Recordar de explicar lo de las claves secretas
+### 1. Configuración de Terraform y Proveedor de Google Cloud Platform
+Esta sección especifca la versión de Terraform y el proveedor de GCP que se utilizará. Además, configura las credenciales y la información del proyecto, región y zona para la interacción con GCP.
+Los  atributos del proveedor como son las nombradas anteriormente han sido guardadas en dos ficheros de variables [variables.tf](https://github.com/FranRamosG/pruebatecnica/blob/main/variables.tf) y [terraform.tfvars](https://github.com/FranRamosG/pruebatecnica/blob/main/terraform.tfvars) como se ha explicado en el proceso.
 
-## Resultado
+Para generar las credenciales:
+1. acceder a la parte de 'IAM y Administración --> Cuentas de Servicio:
 
-a
+![Captura de pantalla 2024-03-01 124943](https://github.com/FranRamosG/pruebatecnica/assets/131311475/0e0de7e8-71d0-4736-9add-7c098dd8473a)
+
+2. Crear la cuenta de servicio:
+
+![Captura de pantalla 2024-03-01 125032](https://github.com/FranRamosG/pruebatecnica/assets/131311475/738eaa61-6638-4db7-9fc0-d16f2aaad7df)
+
+3. Acceder a la cuenta de servicio y crear la clave de tipo JSON generando un archivo que será el que utilicemos como credenciales:
+
+![Captura de pantalla 2024-03-01 125113](https://github.com/FranRamosG/pruebatecnica/assets/131311475/f1ad22e2-04b6-40f2-9434-c70a37369304)
+
+### 2. Red Virtual
+
+Crea una red virtual en GCP con el nombre `red-local-pt` para alojar los recursos de las infraestructura. ([Código](https://github.com/FranRamosG/pruebatecnica/blob/main/main.tf#L18))
+
+### 3. Plantilla de Instancia de Aplicación
+
+Define una plantilla para la instancia de aplicación que incluye la configuración de la máquina virtual, la imagen del disco, la configuración de red y scripts de inicio. ([Código](https://github.com/FranRamosG/pruebatecnica/blob/main/main.tf#L23))
+
+### 4. Grupo de Instancias y Manager del Grupo
+
+Crea un grupo de instancias y su manager asociado para manejar la instancia de aplicación, estableciendo el tamaño del grupo y la versión de la plantilla. ([Código](https://github.com/FranRamosG/pruebatecnica/blob/main/main.tf#L49))
+
+### 5. IP Externa para el Balanceador de Cargas
+
+Establece una dirección IP global para el balanceador de cargas. ([Código](https://github.com/FranRamosG/pruebatecnica/blob/main/main.tf#L65))
+
+### 6. Instancia del Balanceador de Cargas
+
+Crea una instancia que servirá como el balanceador de cargas. ([Código](https://github.com/FranRamosG/pruebatecnica/blob/main/main.tf#L71))
+
+### 7. Configuración de Firewall
+
+Define una regla de firewall para permitir el tráfico en el puerto 80 utilizado por el balanceador de cargas. ([Código](https://github.com/FranRamosG/pruebatecnica/blob/main/main.tf#L99))
+
+### 8. Configuración del Balanceador de Carga
+
+Las secciones restantes del código configuran el balanceador de cargas, incluyendo la verificación de estado, el servicio de backend, el mapa de URL, el proxy HTTP de destino y la regla de reenvío. ([Código](https://github.com/FranRamosG/pruebatecnica/blob/main/main.tf#L113))
+
+#### 8.1 Creación de la Verificación de Estado
+
+En esta sección, se crea una verificación de estado (health check) llamada `http-basic-check`. Esta verificación se realiza cada 5 segundos, con un umbral de salud positiva establecido en 2. La verificación de salud se realiza a través de una solicitud HTTP en el puerto 80 con la ruta "/" especificada. ([Código](https://github.com/FranRamosG/pruebatecnica/blob/main/main.tf#L114))
+
+#### 8.2 Creación del Servicio de Backend
+
+Se define el servicio de backend llamado `web-backend-service`. Este servicio utiliza la verificación de estado creada anteriormente. Además, se configuran parámetros como el esquema de balanceo, el puerto, el protocolo (HTTP), la afinidad de sesión y otros detalles relevantes. El servicio de backend está asociado al grupo de instancias creado en secciones anteriores. ([Código](https://github.com/FranRamosG/pruebatecnica/blob/main/main.tf#L129))
+
+#### 8.3 Creación del Mapa de URL
+
+Esta sección establece un mapa de URL llamado `web-map-http`. El mapa de URL vincula el servicio de backend creado anteriormente como servicio predeterminado. ([Código](https://github.com/FranRamosG/pruebatecnica/blob/main/main.tf#L146))
+
+#### 8.4 Creación del Proxy HTTP de destino
+
+Se crea un proxy HTTP de destino llamado `http-lb-proxy`, que utiliza el mapa de URL previamente definido. ([Código](https://github.com/FranRamosG/pruebatecnica/blob/main/main.tf#L152))
+
+#### 8.5 Creación de la Regla de Reenvío Global
+
+Finalmente, se configura una regla de reenvío global llamada `http-content-rule`. Esta regla especifica detalles como el protocolo, el esquema de balanceo, el rango de puertos, el destino (el proxy HTTP de destino) y la dirección IP global asociada. ([Código](https://github.com/FranRamosG/pruebatecnica/blob/main/main.tf#L158))
+
+## Conclusiones
+
+A pesar de mis limitados conocimientos iniciales, el proyecto de implementación en Google Cloud Platform con Terraform me brindó valiosas lecciones. Opté por GCP por su robusta infraestructura, mientras Terraform facilitó la automatización. Aprendí a través de tutoriales y documentación, logrando una instancia de aplicación y un balanceador de carga funcional, aunque la instancia destinada a esto no se completó por restricciones de tiempo. Este proyecto no solo mejoró mis habilidades, sino que también aumentó mi motivación para seguir aprendiendo.

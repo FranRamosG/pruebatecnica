@@ -49,17 +49,18 @@ Con la que empecé a entender como funcionaba el balanceador de cargas y con un 
 
 Estando en el enlace anterior todos los elementos utilizados con su documentación oficial en la página de Terraform.
 
-Si embargo trás esto solo se quedaron dos instancias por separado sin saber como hacer para que el funcionase el balanceador de cargas, por lo cual me puse a buscar por internet  formas de crear un balanceador de cargas y terminé encontrando una pequeña guía de como crear un balanceador de cargas en la página oficical de GCP que utlicé como base para crear la infraestructura:
+Sin embargo, después de este punto, me encontré con la situación en la que solo quedaron dos instancias de manera independiente, sin una guía clara sobre cómo hacer que el balanceador de cargas funcionara. 
+Ante esto, comencé a buscar en internet para encontra métodos efectivos de implementar un balanceador de cargas. Finalmente, encontré una breve guía en la página oficial de GCP que utilicé como referncia para establecer la infraestructura necesaria:
 
 [![image](https://github.com/FranRamosG/pruebatecnica/assets/131311475/8f595844-cfd5-4db1-9153-00e9f3db43b0)](https://cloud.google.com/iap/docs/load-balancer-howto?hl=es-419#terraform_2)
 
-Aún así el balanceador de cargas que se quedó no es una instanca.
+A pesar de ello, el balanceador de cargas no es una instancia.
 
-Buscando una forma que la nstancia hiciese de balanceador de cargas se me echó el tiempo encima y no pude avanzar más en el proyecto quedando:
+Debido a las limitaciones temporales, no pude continuar explorando la opción de utilizar la instancia como balanceador de cargas. Como resultado, el estado actual del proyecto incluye:
 
- - Una instancia aplicación `app-instance`con apache instalado (previo a la instalación del wordpress) a la que se puede acceder desde su dirección IP.
- - Un balanceador de cargas que puede acceder al contenido de la instancia aplicación a traves de su dirección IP.
- - Una instancia `bal-instance`que no terminé de montar como balanceador
+- Una instancia de aplicación llamada `app-instance` con Apache instalado (anterior a la instalación de WordPress) y accesible mediante su dirección IP.
+- Un balanceador de cargas que puede acceder al contenido de la instancia de aplicación a través de su dirección IP.
+- Una instancia llamada `bal-instance` destinada a funcionar como balanceador de cargas, la cual no ha sido completamente implementada.
 
 ## Implementación
 

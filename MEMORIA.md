@@ -35,12 +35,18 @@ Posterior a este punto, me centré en la busqueda de como comenzar el proyecto, 
 ](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started)
 
 Realizando este tuorial es como aprendi para usar los siguientes archivos:
-- [main.tf]() para la creación de la infraestructura como código.
-- [variables.tf]() para guardar las variables
-- [terraform.tfvars]() para las credenciales y el id del proyecto
+- [main.tf](https://github.com/FranRamosG/pruebatecnica/blob/main/main.tf) para la creación de la infraestructura como código.
+- [variables.tf](https://github.com/FranRamosG/pruebatecnica/blob/main/variables.tf) para guardar las variables
+- [terraform.tfvars](https://github.com/FranRamosG/pruebatecnica/blob/main/terraform.tfvars) para las credenciales y el id del proyecto
 
+Tras esto comenze a buscar formas de crear un balanceador de cargas, cuando encontré la siguiente imagen:
 
-  
+<img src="https://gitlab.com/example/screenshot" width="48"> 
+  ![7wJtCqbfTFLwKCpOMzUSyPjVKBjUouWHbduOqMpfRiM=](https://github.com/FranRamosG/pruebatecnica/assets/131311475/2753eb9f-03b6-478c-a60e-2203df71af8b) 
+<img src="https://gitlab.com/example/screenshot" alt="Drawing" style="width: 200px;"/>
+
+Fuente: https://www.iteramos.com/pregunta/89805/cambiar-el-tamano-de-la-imagen-en-markdown-en-gitlab
+Con la que empecé a entender como funcionaba el balanceador de cargas y con un poco de ayuda de las IA para conocer los `resource`necesarios para cada parte del balanceador y buscando 
 ## Implementación
 
 Recordar de explicar lo de las claves secretas

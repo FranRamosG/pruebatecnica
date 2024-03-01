@@ -27,8 +27,20 @@ Las herramientas empleadas en el proyrecto son las siguientes:
 
 ## Proceso
 
-a
+Dada mi limitada experiencia en las herramientas necesarias para llevar a cabo esta prueba, mi enfoque inicial consisitió en adquirir conocimientos sobre Terraform, GCP y AWS. La selección de GCP como la plataforma para implementar la infraestructura en la nube se basó principalmente en mi familiaridad pervia con el enntorno de Google.
 
+Posterior a este punto, me centré en la busqueda de como comenzar el proyecto, identificando en la página oficial de Terraform un tutorial especifco que guía la creación de una infraestructura básica con una instancia en GCP. 
+
+[![image](https://github.com/FranRamosG/pruebatecnica/assets/131311475/74251376-c86f-429b-9c9f-8972ba10b368)
+](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started)
+
+Realizando este tuorial es como aprendi para usar los siguientes archivos:
+- [main.tf]() para la creación de la infraestructura como código.
+- [variables.tf]() para guardar las variables
+- [terraform.tfvars]() para las credenciales y el id del proyecto
+
+
+  
 ## Implementación
 
 Recordar de explicar lo de las claves secretas
